@@ -1,7 +1,9 @@
 package com.piyapatdev.expenseapi;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class ExpenseRestapiApplication {
@@ -10,4 +12,8 @@ public class ExpenseRestapiApplication {
 		SpringApplication.run(ExpenseRestapiApplication.class, args);
 	}
 
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 }
