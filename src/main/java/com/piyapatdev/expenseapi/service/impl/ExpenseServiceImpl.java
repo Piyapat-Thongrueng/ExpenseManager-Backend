@@ -2,6 +2,7 @@ package com.piyapatdev.expenseapi.service.impl;
 
 import com.piyapatdev.expenseapi.dto.ExpenseDTO;
 import com.piyapatdev.expenseapi.entity.ExpenseEntity;
+import com.piyapatdev.expenseapi.exceptions.ResourceNotFoundException;
 import com.piyapatdev.expenseapi.repository.ExpenseRepository;
 import com.piyapatdev.expenseapi.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,19 @@ public class ExpenseServiceImpl implements ExpenseService {
         List<ExpenseDTO> listOfExpenses = list.stream().map(expenseEntity -> mapToExpenseDTO(expenseEntity))
                 .collect(Collectors.toList());
         return listOfExpenses;
+    }
+
+    /**
+     * It will fetch the single expense details from the database
+     * @param expenseId
+     * @return ExpenseDTO
+     * */
+    @Override
+    public ExpenseDTO getExpenseByExpenseId(String expenseId) {
+        ExpenseEntity expenseEntity = expenseRepository.findByExpenseId(expenseId)
+                .orElseThrow(() -> new ResourceNotFoundException("Expense not found for the expense id" + expenseId));
+        log.info("Printing the expense entity details {}", expenseEntity);
+        return mapToExpenseDTO(expenseEntity);
     }
 
     /**
