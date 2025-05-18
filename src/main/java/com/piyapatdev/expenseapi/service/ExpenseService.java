@@ -9,17 +9,21 @@ import java.util.List;
  * @author PiyapatDev
  * */
 public interface ExpenseService {
-
     /**
      * It will fetch the expenses from the database
      * @return list
      * */
     List<ExpenseDTO> getAllExpenses();
-
     /**
      * It will fetch the single expense details from the database
      * @param expenseId
      * @return ExpenseDTO
      * */
     ExpenseDTO getExpenseByExpenseId(String expenseId);
+    /**
+     * It will delete the expense from the database
+     * @param expenseId
+     * @return void
+     * */
+    void deleteExpenseByExpenseId(String expenseId);
 }

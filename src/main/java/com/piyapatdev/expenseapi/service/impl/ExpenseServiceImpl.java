@@ -39,7 +39,6 @@ public class ExpenseServiceImpl implements ExpenseService {
                 .collect(Collectors.toList());
         return listOfExpenses;
     }
-
     /**
      * It will fetch the single expense details from the database
      * @param expenseId
@@ -48,11 +47,22 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public ExpenseDTO getExpenseByExpenseId(String expenseId) {
         ExpenseEntity expenseEntity = expenseRepository.findByExpenseId(expenseId)
-                .orElseThrow(() -> new ResourceNotFoundException("Expense not found for the expense id" + expenseId));
+                .orElseThrow(() -> new ResourceNotFoundException("ขออภัยไม่พบข้อมูลที่คุณค้นหา กรุณาตรวจสอบรายการอีกครั้ง"));
         log.info("Printing the expense entity details {}", expenseEntity);
         return mapToExpenseDTO(expenseEntity);
     }
-
+    /**
+     * It will delete the expense from the database
+     * @param expenseId
+     * @return void
+     * */
+    @Override
+    public void deleteExpenseByExpenseId(String expenseId) {
+        ExpenseEntity expenseEntity = expenseRepository.findByExpenseId(expenseId)
+                .orElseThrow(()-> new ResourceNotFoundException("ขออภัยไม่พบข้อมูลที่คุณค้นหา กรุณาตรวจสอบรายการอีกครั้ง"));
+        log.info("Printing the expense entity {}", expenseEntity);
+        expenseRepository.delete(expenseEntity);
+    }
     /**
      * Mapper method to convert expenses entity to expenseDTO
      * @param expenseEntity
@@ -61,5 +71,4 @@ public class ExpenseServiceImpl implements ExpenseService {
     private ExpenseDTO mapToExpenseDTO(ExpenseEntity expenseEntity) {
         return modelMapper.map(expenseEntity,ExpenseDTO.class);
     }
-
 }

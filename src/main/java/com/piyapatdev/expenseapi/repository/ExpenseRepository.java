@@ -9,7 +9,6 @@ import java.util.Optional;
  * @author PiyapatDev
  * */
 public interface ExpenseRepository extends JpaRepository<ExpenseEntity, Long> {
-
     /**
      * It will find the single expense from the database
      * @param expenseId
