@@ -78,6 +78,22 @@ public class ExpenseServiceImpl implements ExpenseService {
         return mapToExpenseDTO(newExpenseEntity);
     }
 
+    @Override
+    public ExpenseDTO updateExpenseDetails(ExpenseDTO expenseDTO, String expenseId) {
+        ExpenseEntity existingExpense = expenseRepository.findByExpenseId(expenseId)
+                .orElseThrow(() -> new ResourceNotFoundException("ขออภัยไม่พบข้อมูลที่คุณค้นหา กรุณาตรวจสอบรายการอีกครั้ง"));
+        ExpenseEntity updatedExpenseEntity = maptoExpenseEntity(expenseDTO);
+        updatedExpenseEntity.setId(existingExpense.getId());
+        updatedExpenseEntity.setExpenseId(existingExpense.getExpenseId());
+        updatedExpenseEntity.setCreatedAt(existingExpense.getCreatedAt());
+        updatedExpenseEntity.setUpdatedAt(existingExpense.getUpdatedAt());
+        updatedExpenseEntity = expenseRepository.save(updatedExpenseEntity);
+        log.info("Printing the updated expenseDTO details {}", updatedExpenseEntity);
+        return mapToExpenseDTO(updatedExpenseEntity);
+    }
+
+
+
 
 
 
